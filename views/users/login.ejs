@@ -1,0 +1,33 @@
+<% layout("/layouts/boilerplate") %>
+
+<% if (error && error.length > 0) { %>
+  <div class="alert alert-danger">
+    <%= error %>
+  </div>
+<% } %>
+
+
+<div class="row mt-3">
+  <h1 class="col-6 offset-3">Please Login</h1>
+  <div class="col-6 offset-3">
+    <form action="/login" method="POST" class="needs-validation" novalidate>
+
+      <div class="mb-3">
+        <label for="username" class="form-label fw-semibold">Username</label>
+        <input type="text" id="username" name="username"
+               class="form-control shadow-sm rounded-3 px-3 py-2" required>
+        <div class="invalid-feedback">Please enter a username</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label fw-semibold">Password</label>
+        <input type="password" id="password" name="password"
+               class="form-control shadow-sm rounded-3 px-3 py-2" required>
+        <div class="invalid-feedback">Please enter a password</div>
+      </div>
+
+      <button type="submit" class="btn btn-success">Login</button>
+
+    </form>
+  </div>
+</div>

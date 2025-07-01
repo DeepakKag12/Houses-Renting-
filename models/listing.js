@@ -1,0 +1,51 @@
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const Review = require("./review"); // ⬅️ Make sure this path is correct
+
+const listingSchema = new Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  description: String,
+  image: {
+    url: {
+      type: String,
+      default:
+        "https://images.unsplash.com/photo-1625505826533-5c80aca7d157?ixlib=rb-4.0.3&...",
+      set: (v) =>
+        v === ""
+          ? "https://images.unsplash.com/photo-1625505826533-5c80aca7d157?ixlib=rb-4.0.3&..."
+          : v,
+    },
+    filename: {
+      type: String,
+      default: "listingimage",
+    },
+  },
+  price: Number,
+  location: String,
+  country: String,
+  reviews: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Review",
+    },
+  ],
+  owner:{
+       type: Schema.Types.ObjectId,
+      ref: "User",
+
+  }
+});
+
+// ✅ Middleware to delete all related reviews when a listing is deleted
+listingSchema.post("findOneAndDelete", async function (doc) {
+  if (doc) {
+    await Review.deleteMany({ _id: { $in: doc.reviews } });
+    console.log(`Deleted ${doc.reviews.length} associated review(s)`);
+  }
+});
+
+const Listing = mongoose.model("Listing", listingSchema);
+module.exports = Listing;

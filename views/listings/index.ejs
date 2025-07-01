@@ -1,0 +1,34 @@
+<% layout("/layouts/boilerplate") %>
+<% if (success && success.length) { %>
+  <div class="alert alert-success">
+    <%= success %>
+  </div>
+<% } %>
+
+<% if (error && error.length) { %>
+  <div class="alert alert-danger">
+    <%= error %>
+  </div>
+<% } %>
+
+<h3 class="text-center my-4">All Listings</h3>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  <% for (let listing of listings) { %>
+    <div class="col">
+      <div class="card h-100" style="border: none ;">
+        <a href="/listings/<%= listing._id %>" style="text-decoration: none; color: inherit;">
+          <img src="<%= listing.image.url %>" class="card-img-top" style="height: 20rem; object-fit: cover;" alt="Listing Image">
+          <div class="card-body">
+            <h5 class="card-title">
+              <b><%= listing.title %></b>
+            </h5>
+            <p class="card-text">
+              Price: &#8377; <%= typeof listing.price === "number" ? listing.price.toLocaleString("en-IN") : "Not Available" %>/night
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+  <% } %>
+</div>
