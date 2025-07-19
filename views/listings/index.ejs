@@ -1,4 +1,5 @@
 <% layout("/layouts/boilerplate") %>
+
 <% if (success && success.length) { %>
   <div class="alert alert-success">
     <%= success %>
@@ -13,19 +14,129 @@
 
 <h3 class="text-center my-4">All Listings</h3>
 
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<script>
+  function updateGuestCount(type, delta) {
+    const input = document.getElementById(`${type}-count`);
+    let count = parseInt(input.value);
+    count = Math.max(0, count + delta);
+    input.value = count;
+    updateWhoLabel();
+  }
+
+  function updateWhoLabel() {
+    const adults = parseInt(document.getElementById('adults-count').value);
+    const children = parseInt(document.getElementById('children-count').value);
+    const infants = parseInt(document.getElementById('infants-count').value);
+    const pets = parseInt(document.getElementById('pets-count').value);
+    const total = adults + children + infants + pets;
+    document.getElementById('who-label').innerText = total > 0 ? `${total} guest${total > 1 ? 's' : ''}` : "Add guests";
+  }
+</script>
+
+<!-- Search Bar -->
+<div class="container my-4">
+  <form action="/listings" method="GET" class="bg-white shadow-sm rounded-pill d-flex align-items-center px-3 py-2" style="max-width: 900px; margin: 0 auto; position: relative;">
+    
+    <!-- Where -->
+    <div class="flex-grow-1 px-2">
+      <label class="form-label mb-0 fw-semibold small text-muted">Where</label>
+      <input type="text" name="location" class="form-control border-0 p-0 shadow-none" placeholder="Search destinations">
+    </div>
+
+    <div class="border-start mx-2"></div>
+
+    <!-- Check-in -->
+    <div class="px-2">
+      <label class="form-label mb-0 fw-semibold small text-muted">Check in</label>
+      <input type="date" name="checkin" class="form-control border-0 p-0 shadow-none">
+    </div>
+
+    <div class="border-start mx-2"></div>
+
+    <!-- Check-out -->
+    <div class="px-2">
+      <label class="form-label mb-0 fw-semibold small text-muted">Check out</label>
+      <input type="date" name="checkout" class="form-control border-0 p-0 shadow-none">
+    </div>
+
+    <div class="border-start mx-2"></div>
+
+    <!-- Guests -->
+    <div class="px-2 position-relative">
+      <label class="form-label mb-0 fw-semibold small text-muted">Who</label>
+      <div class="form-control border-0 p-0 shadow-none bg-transparent" id="who-label" data-bs-toggle="dropdown" style="cursor: pointer;">Add guests</div>
+
+      <div class="dropdown-menu p-3 shadow rounded-4" style="width: 300px;">
+        <!-- Adults -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div>
+            <strong>Adults</strong><br><small>Ages 13 or above</small>
+          </div>
+          <div>
+            <button type="button" class="btn btn-light rounded-circle" onclick="updateGuestCount('adults', -1)">−</button>
+            <input type="text" readonly class="border-0 text-center" id="adults-count" name="adults" value="0" style="width: 30px;">
+            <button type="button" class="btn btn-light rounded-circle" onclick="updateGuestCount('adults', 1)">+</button>
+          </div>
+        </div>
+
+        <!-- Children -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div>
+            <strong>Children</strong><br><small>Ages 2–12</small>
+          </div>
+          <div>
+            <button type="button" class="btn btn-light rounded-circle" onclick="updateGuestCount('children', -1)">−</button>
+            <input type="text" readonly class="border-0 text-center" id="children-count" name="children" value="0" style="width: 30px;">
+            <button type="button" class="btn btn-light rounded-circle" onclick="updateGuestCount('children', 1)">+</button>
+          </div>
+        </div>
+
+        <!-- Infants -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div>
+            <strong>Infants</strong><br><small>Under 2</small>
+          </div>
+          <div>
+            <button type="button" class="btn btn-light rounded-circle" onclick="updateGuestCount('infants', -1)">−</button>
+            <input type="text" readonly class="border-0 text-center" id="infants-count" name="infants" value="0" style="width: 30px;">
+            <button type="button" class="btn btn-light rounded-circle" onclick="updateGuestCount('infants', 1)">+</button>
+          </div>
+        </div>
+
+        <!-- Pets -->
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <strong>Pets</strong><br><a href="#" class="text-muted small">Bringing a service animal?</a>
+          </div>
+          <div>
+            <button type="button" class="btn btn-light rounded-circle" onclick="updateGuestCount('pets', -1)">−</button>
+            <input type="text" readonly class="border-0 text-center" id="pets-count" name="pets" value="0" style="width: 30px;">
+            <button type="button" class="btn btn-light rounded-circle" onclick="updateGuestCount('pets', 1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Button -->
+    <button type="submit" class="btn btn-danger rounded-pill ms-3 d-flex align-items-center px-3">
+      <i class="fas fa-search text-white me-1"></i> Search
+    </button>
+  </form>
+</div>
+
+<!-- Listings -->
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
   <% for (let listing of listings) { %>
     <div class="col">
-      <div class="card h-100" style="border: none ;">
+      <div class="card h-100" style="border: none;">
         <a href="/listings/<%= listing._id %>" style="text-decoration: none; color: inherit;">
           <img src="<%= listing.image.url %>" class="card-img-top" style="height: 20rem; object-fit: cover;" alt="Listing Image">
           <div class="card-body">
-            <h5 class="card-title">
-              <b><%= listing.title %></b>
-            </h5>
-            <p class="card-text">
-              Price: &#8377; <%= typeof listing.price === "number" ? listing.price.toLocaleString("en-IN") : "Not Available" %>/night
-            </p>
+            <h5 class="card-title"><b><%= listing.title %></b></h5>
+            <p class="card-text">Price: ₹<%= typeof listing.price === "number" ? listing.price.toLocaleString("en-IN") : "Not Available" %>/night</p>
           </div>
         </a>
       </div>

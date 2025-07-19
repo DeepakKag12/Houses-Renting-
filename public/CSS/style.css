@@ -77,3 +77,36 @@ html,body{
 .card-text{
    font-weight: 400 !important;
 }
+
+/* map */
+
+ /* Map container */
+#map {
+  min-height: 400px;
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure Mapbox canvas fills its container properly */
+.mapboxgl-canvas {
+  height: 100% !important;
+  width: 100% !important;
+  position: absolute !important;
+  top: 0;
+  left: 0;
+}
+
+/* Prevent horizontal scrollbars caused by Mapbox layout overflow */
+html, body {
+  overflow-x: hidden;
+}
+/* map */
+#map{
+  height: 400px;
+  width: 80vh;
+  display: flex;
+  align-items: center;
+}

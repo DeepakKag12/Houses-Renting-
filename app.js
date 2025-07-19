@@ -1,3 +1,10 @@
+
+if(process.env.NODE_ENV!="production")
+{
+  require("dotenv").config();
+
+}
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -56,10 +63,10 @@ const sessionOption = {
   },
 
 };
-// Root Route
-app.get("/", (req, res) => {
-  res.send("🌍 Wanderlust Home");
-});
+// // Root Route
+// app.get("/", (req, res) => {
+//   res.send("🌍 Wanderlust Home");
+// });
 
 
 

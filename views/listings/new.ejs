@@ -2,7 +2,7 @@
 
 <div class="container my-5">
   <h2 class="text-center mb-4">Create New Listing</h2>
-  <form action="/listings" method="POST" class="p-4 border rounded-4 shadow-sm bg-light needs-validation" novalidate>
+  <form action="/listings" method="POST" class="p-4 border rounded-4 shadow-sm bg-light needs-validation" novalidate enctype="multipart/form-data">
     
     <!-- Title -->
     <div class="mb-4">
@@ -20,9 +20,10 @@
     </div>
 
     <!-- Image -->
-    <div class="mb-4">
-      <label for="image" class="form-label fw-semibold">🖼️ Image URL</label>
-      <input type="url" class="form-control shadow-sm rounded-3 px-3 py-2" name="listing[image]" id="image" placeholder="https://example.com/image.jpg">
+   
+     <div class="mb-4">
+      <label for="image" class="form-label fw-semibold">🖼️ Upload Image</label>
+      <input type="file" class="form-control shadow-sm rounded-3 px-3 py-2" name="listing[image]" id="image"  required>
     </div>
 
     <!-- Price & Country -->

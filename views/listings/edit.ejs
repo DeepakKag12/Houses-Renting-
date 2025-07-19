@@ -32,7 +32,7 @@
 </style>
 
 <div class="edit-wrapper container">
-  <form action="/listings/<%= listing._id %>?_method=PUT" method="POST" class="edit-card needs-validation" novalidate>
+  <form action="/listings/<%= listing._id %>?_method=PUT" method="POST" class="edit-card needs-validation" novalidate enctype="multipart/form-data">
 
     <h3 class="text-center mb-4"> Edit Listing</h3>
 
@@ -50,12 +50,23 @@
       <textarea class="form-control" name="listing[description]" id="description" rows="2" required><%= listing.description %></textarea>
       <div class="invalid-feedback">Description should be valid.</div>
     </div>
+  
+   <!-- Show existing image -->
+<div class="mb-3">
+  <label class="form-label fw-semibold">📷 Current Image</label>
+  <div>
+    <img src="<%= transformedImageUrl %>" alt="Current Listing Image" class="img-fluid rounded" style="max-height: 300px; height: 150px;">
+
+  </div>
+</div>
+
 
     <!-- Image -->
-    <div class="mb-3">
-      <label for="image" class="form-label"> Image URL</label>
-      <input type="text" class="form-control" name="listing[image][url]" id="image" value="<%= listing.image.url %>">
+     <div class="mb-4">
+      <label for="image" class="form-label fw-semibold">🖼️ Upload new Image</label>
+      <input type="file" class="form-control shadow-sm rounded-3 px-3 py-2" name="listing[image]" id="image" >
     </div>
+
 
     <!-- Price and Country -->
     <div class="row mb-3">

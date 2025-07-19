@@ -9,19 +9,8 @@ const listingSchema = new Schema({
   },
   description: String,
   image: {
-    url: {
-      type: String,
-      default:
-        "https://images.unsplash.com/photo-1625505826533-5c80aca7d157?ixlib=rb-4.0.3&...",
-      set: (v) =>
-        v === ""
-          ? "https://images.unsplash.com/photo-1625505826533-5c80aca7d157?ixlib=rb-4.0.3&..."
-          : v,
-    },
-    filename: {
-      type: String,
-      default: "listingimage",
-    },
+    url:String,
+    filename:String,
   },
   price: Number,
   location: String,
@@ -36,7 +25,19 @@ const listingSchema = new Schema({
        type: Schema.Types.ObjectId,
       ref: "User",
 
+  },
+  geometry: {
+  type: {
+    type: String,
+    enum: ['Point'],
+    required: true
+  },
+  coordinates: {
+    type: [Number], // [longitude, latitude]
+    required: true
   }
+}
+
 });
 
 // ✅ Middleware to delete all related reviews when a listing is deleted
