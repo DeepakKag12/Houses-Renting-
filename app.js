@@ -24,7 +24,7 @@ const LocalStrategy=require("passport-local");
 // Models
 const Listing = require("./models/listing.js");
 // const Listing = require("../MAJORPROJECT/models/listing.js");
-const Review = require("../MAJORPROJECT/models/review.js");
+const Review = require("./models/review.js");
 const User=require("./models/user.js")
 
 // Utils
