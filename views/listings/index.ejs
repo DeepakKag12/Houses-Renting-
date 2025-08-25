@@ -202,72 +202,7 @@
   }
 </script>
 
-<!-- Search Bar -->
-<div  class="search-container sticky-top bg-white shadow-sm py-3 " style="width: 65%; height: 6.5rem;"
->
-  <form id="search-bar" action="/listings" method="GET" class="d-flex flex-wrap align-items-center w-100">
-    <!-- Where -->
-    <div class="flex-grow-1 px-2">
-      <label class="form-label mb-0 fw-semibold small text-muted">Where</label>
-      <input type="text" name="location" class="form-control border-0 p-0 shadow-none" placeholder="Search destinations">
-    </div>
-
-    <div class="border-start mx-2"></div>
-
-    <!-- Check-in -->
-    <div class="px-2">
-      <label class="form-label mb-0 fw-semibold small text-muted">Check in</label>
-      <input type="date" name="checkin" class="form-control border-0 p-0 shadow-none">
-    </div>
-
-    <div class="border-start mx-2"></div>
-
-    <!-- Check-out -->
-    <div class="px-2">
-      <label class="form-label mb-0 fw-semibold small text-muted">Check out</label>
-      <input type="date" name="checkout" class="form-control border-0 p-0 shadow-none">
-    </div>
-
-    <div class="border-start mx-2"></div>
-
-    <!-- Guests -->
-    <div class="px-2 position-relative">
-      <label class="form-label mb-0 fw-semibold small text-muted">Who</label>
-      <div class="form-control border-0 p-0 shadow-none bg-transparent" id="who-label" data-bs-toggle="dropdown">Add guests</div>
-
-      <div class="dropdown-menu p-3 shadow rounded-4" style="width: 300px;">
-        <!-- Adults -->
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <div>
-            <strong>Adults</strong><br><small>Ages 13 or above</small>
-          </div>
-          <div>
-            <button type="button" class="btn btn-light rounded-circle" onclick="updateGuestCount('adults', -1)">−</button>
-            <input type="text" readonly class="border-0 text-center" id="adults-count" name="adults" value="0" style="width: 30px;">
-            <button type="button" class="btn btn-light rounded-circle" onclick="updateGuestCount('adults', 1)">+</button>
-          </div>
-        </div>
-
-        <!-- Children -->
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <div>
-            <strong>Children</strong><br><small>Ages 2–12</small>
-          </div>
-          <div>
-            <button type="button" class="btn btn-light rounded-circle" onclick="updateGuestCount('children', -1)">−</button>
-            <input type="text" readonly class="border-0 text-center" id="children-count" name="children" value="0" style="width: 30px;">
-            <button type="button" class="btn btn-light rounded-circle" onclick="updateGuestCount('children', 1)">+</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Search Button -->
-    <button type="submit" class="btn btn-danger rounded-pill ms-3 d-flex align-items-center px-3 mt-2 mt-md-0">
-      <i class="fas fa-search text-white me-1"></i> Search
-    </button>
-  </form>
-</div>
+<!-- ...search bar removed, now placed in navbar... -->
 
 <!-- Listings -->
 <div class="container">
