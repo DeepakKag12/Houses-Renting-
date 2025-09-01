@@ -76,12 +76,7 @@
           <a class="nav-link fw-semibold" href="/listings">Explore</a>
         </li>
         <% if(currUser) { %>
-        <li class="nav-item">
-          <a class="btn btn-outline-danger rounded-pill px-4 py-2 fw-semibold d-flex align-items-center gap-2" href="/favorites" style="transition:all 0.2s;">
-            <i class="fa-solid fa-heart"></i>
-            <span style="color:#ff385c;">Wishlist</span>
-          </a>
-        </li>
+  <!-- Wishlist button removed as requested -->
         <% } %>
       </ul>
       <!-- Modern Search Bar -->
@@ -110,6 +105,10 @@
               <span style="color:#222;">Host Bookings</span>
             </a>
           <% } %>
+            <a class="btn btn-danger rounded-pill px-4 py-2 fw-semibold d-flex align-items-center gap-2" href="/logout" style="transition:all 0.2s;">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <span style="color:#fff;">Log out</span>
+            </a>
         <% } %>
 <style>
   .navbar-nav .nav-link:hover, .navbar-nav .btn:hover {

@@ -17,14 +17,16 @@
 
 <style>
   body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f9f9f9;
+    font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+    background-color: #f7f7f7;
   }
 
   .alert {
     max-width: 800px;
     margin: 20px auto;
-    border-radius: 12px;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(255,56,92,0.08);
+    font-size: 1.08rem;
   }
 
   /* Search Bar */
@@ -34,7 +36,7 @@
     background-color: #fff;
     border-radius: 2rem;
     padding: 24px 18px 18px 18px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 20px rgba(255,56,92,0.08);
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -42,17 +44,21 @@
   }
 
   .search-container label {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     font-weight: 600;
-    color: #555;
+    color: #ff385c;
+    letter-spacing: 0.5px;
   }
 
   .search-container input {
-    font-size: 0.95rem;
-    background: transparent;
-    border: none;
+    font-size: 1rem;
+    background: #fafafa;
+    border: 1px solid #eee;
     outline: none;
-    padding: 4px 0;
+    padding: 8px 12px;
+    border-radius: 1rem;
+    margin-bottom: 0.5rem;
+    transition: border 0.2s;
   }
 
   .search-container input[type="date"] {

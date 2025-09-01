@@ -7,11 +7,12 @@ const { isLoggedIn } = require('../middleware');
 // Accept booking
 router.post('/:id/accept', async (req, res, next) => {
   try {
-    const booking = await Booking.findById(req.params.id).populate('user listing');
+    const booking = await Booking.findByIdAndUpdate(
+      req.params.id,
+      { status: 'confirmed' },
+      { new: true }
+    ).populate('user listing');
     if (!booking) throw new Error('Booking not found');
-    booking.status = 'confirmed';
-    await booking.save();
-    // Notify user (flash message on next login)
     req.flash('success', `Booking for ${booking.listing.title} accepted. User ${booking.user.username} will be notified.`);
     res.redirect('/host/bookings');
   } catch (err) {
@@ -22,11 +23,12 @@ router.post('/:id/accept', async (req, res, next) => {
 // Reject booking
 router.post('/:id/reject', async (req, res, next) => {
   try {
-    const booking = await Booking.findById(req.params.id).populate('user listing');
+    const booking = await Booking.findByIdAndUpdate(
+      req.params.id,
+      { status: 'cancelled' },
+      { new: true }
+    ).populate('user listing');
     if (!booking) throw new Error('Booking not found');
-    booking.status = 'cancelled';
-    await booking.save();
-    // Notify user (flash message on next login)
     req.flash('success', `Booking for ${booking.listing.title} rejected. User ${booking.user.username} will be notified.`);
     res.redirect('/host/bookings');
   } catch (err) {

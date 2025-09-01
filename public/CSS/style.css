@@ -58,6 +58,24 @@ html,body{
   transition: opacity 0.3s ease;
 }
 
+/* Booking Cancel Button Styling */
+.btn-cancel-booking {
+  background-color: #ff385c !important;
+  color: #fff !important;
+  border-radius: 2rem !important;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.5rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(255,56,92,0.12);
+  border: none;
+  margin-top: 0.5rem;
+  display: block;
+}
+.btn-cancel-booking:hover {
+  background-color: #e0314b !important;
+  color: #fff !important;
+}
+
 .card:hover .card-img-top {
   opacity: 0.85;
 }
@@ -90,7 +108,7 @@ html,body{
   z-index: 1;
 }
 
-/* Ensure Mapbox canvas fills its container properly */
+
 .mapboxgl-canvas {
   height: 100% !important;
   width: 100% !important;
@@ -99,7 +117,7 @@ html,body{
   left: 0;
 }
 
-/* Prevent horizontal scrollbars caused by Mapbox layout overflow */
+
 html, body {
   overflow-x: hidden;
 }
@@ -109,4 +127,90 @@ html, body {
   width: 80vh;
   display: flex;
   align-items: center;
+}
+
+
+@media (max-width: 768px) {
+  .booking-card, .card {
+    border-radius: 1.2rem !important;
+    box-shadow: 0 2px 12px rgba(255,56,92,0.10);
+    margin-bottom: 1.2rem !important;
+  }
+  .card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  .btn, .btn-cancel-booking {
+    font-size: 1.05rem;
+    padding: 0.7rem 1.2rem;
+    border-radius: 2rem !important;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  .badge {
+    font-size: 0.95rem;
+    padding: 0.3em 0.8em;
+    border-radius: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .search-container {
+    padding: 16px 8px 12px 8px;
+    border-radius: 1.2rem;
+    box-shadow: 0 2px 8px rgba(255,56,92,0.08);
+  }
+  input, select, textarea {
+    font-size: 1rem;
+    padding: 0.6rem 0.8rem !important;
+    border-radius: 1rem !important;
+  }
+  label {
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+  }
+  .navbar-nav {
+    flex-direction: column !important;
+    gap: 0.5rem;
+  }
+  .navbar-toggler {
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+  }
+  .navbar-collapse {
+    background: #fff;
+    border-radius: 1.2rem;
+    box-shadow: 0 2px 8px rgba(255,56,92,0.08);
+    margin-top: 0.5rem;
+    padding: 1rem;
+  }
+  .navbar-brand {
+    font-size: 1.2rem;
+    padding: 0.5rem 0;
+  }
+  .sticky-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    background: #fff;
+    box-shadow: 0 -2px 16px rgba(255,56,92,0.08);
+    z-index: 1000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.7rem 0;
+  }
+  .sticky-bottom-nav a {
+    color: #ff385c;
+    font-size: 1.3rem;
+    text-align: center;
+    flex: 1;
+    padding: 0.3rem 0;
+    transition: color 0.2s;
+  }
+  .sticky-bottom-nav a.active, .sticky-bottom-nav a:hover {
+    color: #e0314b;
+    font-weight: 700;
+  }
 }
