@@ -8,12 +8,21 @@
 
     <% if (listing.image?.url) { %>
       <div class="mx-auto mb-4 text-center" style="max-width: 700px;">
-        <img 
-          src="<%= listing.image.url %>" 
-          alt="<%= listing.title %>" 
-          class="img-fluid border"
-          style="height: 400px; width: 400px; object-fit: cover; border-radius: 1.2rem;"
-        >
+        <div class="position-relative d-inline-block">
+          <img 
+            src="<%= listing.image.url %>" 
+            alt="<%= listing.title %>" 
+            class="img-fluid border"
+            style="height: 400px; width: 400px; object-fit: cover; border-radius: 1.2rem;"
+          >
+          <% if (currUser && currUser._id.toString() !== listing.owner._id.toString()) { %>
+            <form action="/favorites/<%= listing._id %>" method="POST" class="position-absolute top-0 end-0 m-2">
+              <button type="submit" class="btn btn-link p-0" style="font-size:2rem;color:#ff385c;">
+                <i class="fa<%= currUser.favorites && currUser.favorites.includes(listing._id) ? 's' : 'r' %> fa-heart"></i>
+              </button>
+            </form>
+          <% } %>
+        </div>
       </div>
     <% } %>
 
@@ -22,6 +31,11 @@
     <p class="text-center fs-6"><%= listing.description %></p>
 
     <ul class="list-group list-group-flush mb-4 border-top pt-3">
+    <% if (currUser && currUser._id.toString() !== listing.owner._id.toString()) { %>
+      <div class="mb-3 text-center">
+        <a href="/message/<%= listing._id %>?receiver=<%= listing.owner._id %>" class="btn btn-outline-primary rounded-pill px-4">Message Host</a>
+      </div>
+    <% } %>
       <li class="list-group-item bg-transparent px-0"><strong>💰 Price:</strong> ₹<%= listing.price %></li>
       <li class="list-group-item bg-transparent px-0"><strong>📍 Location:</strong> <%= listing.location %></li>
       <li class="list-group-item bg-transparent px-0"><strong>🌐 Country:</strong> <%= listing.country %></li>
@@ -137,6 +151,8 @@
     <!-- Map Section -->
     <div class="mx-auto mt-5" style="max-width: 700px;">
       <h4 class="mb-3">📍 Where you’ll be</h4>
+      <button id="toggle-bookings" class="btn btn-outline-primary mb-3 rounded-pill px-4" type="button">Show Bookings for This Location</button>
+  <div class="mb-2 text-muted small">* Exact location will be provided after booking.</div>
       <div id="map" style="height: 400px; border-radius: 1.2rem; overflow: hidden;"></div>
     </div>
 
@@ -146,7 +162,7 @@
 <!-- Scripts -->
 <script>
   mapboxgl.accessToken = "<%= process.env.MAP_TOKEN %>";
-  const coordinates = <%- JSON.stringify(listing.geometry?.coordinates || [77.2090, 28.6139]) %>;
+  const coordinates = JSON.parse('<%= JSON.stringify(listing.geometry?.coordinates || [77.2090, 28.6139]) %>');
 
   const map = new mapboxgl.Map({
     container: 'map',
@@ -156,5 +172,36 @@
   });
 
   new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
+
+  // Demo: Bookings for this location (replace with real data)
+  const bookings = JSON.parse('<%= JSON.stringify(typeof bookingsForLocation !== "undefined" ? bookingsForLocation : []) %>');
+  let bookingMarkers = [];
+
+  function showBookingMarkers() {
+    bookingMarkers = bookings.map(b => {
+      const marker = new mapboxgl.Marker({ color: '#ff385c' })
+        .setLngLat(b.coordinates)
+        .setPopup(new mapboxgl.Popup().setText(`Booking: ${b.user}`));
+      marker.addTo(map);
+      return marker;
+    });
+  }
+
+  function hideBookingMarkers() {
+    bookingMarkers.forEach(m => m.remove());
+    bookingMarkers = [];
+  }
+
+  let bookingsVisible = false;
+  document.getElementById('toggle-bookings').addEventListener('click', function() {
+    bookingsVisible = !bookingsVisible;
+    if (bookingsVisible) {
+      showBookingMarkers();
+      this.textContent = 'Hide Bookings for This Location';
+    } else {
+      hideBookingMarkers();
+      this.textContent = 'Show Bookings for This Location';
+    }
+  });
 </script>
 

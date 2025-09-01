@@ -1,7 +1,7 @@
 <% layout("/layouts/boilerplate") %>
 
 <div class="container my-5">
-  <h2 class="mb-4 text-center">My Bookings</h2>
+  <h3 class="fw-bold mb-4">My Bookings</h3>
   <% if (success && success.length) { %>
     <div class="alert alert-success text-center"><%= success %></div>
   <% } %>
@@ -10,16 +10,24 @@
   <% } %>
   <% if (bookings && bookings.length) { %>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-      <% bookings.forEach(b => { %>
+      <% bookings.forEach(booking => { %>
         <div class="col">
           <div class="card shadow-sm border-0 rounded-4">
-            <img src="<%= b.listing.image.url %>" class="card-img-top" alt="Listing Image" style="height:220px;object-fit:cover;border-radius:1.2rem 1.2rem 0 0;">
             <div class="card-body">
-              <h5 class="card-title"><%= b.listing.title %></h5>
-              <p class="card-text">Check-in: <%= b.checkin %><br>Check-out: <%= b.checkout %></p>
-              <p class="card-text">Guests: <%= b.guests %></p>
-              <p class="card-text">Status: <span class="fw-bold <%= b.status==='confirmed'?'text-success':'text-warning' %>"><%= b.status %></span></p>
-              <a href="/listings/<%= b.listing._id %>" class="btn btn-outline-primary rounded-pill">View Listing</a>
+              <h5 class="card-title"><%= booking.listing.title %></h5>
+              <p class="card-text">Check-in: <%= new Date(booking.checkin).toLocaleDateString() %></p>
+              <p class="card-text">Check-out: <%= new Date(booking.checkout).toLocaleDateString() %></p>
+              <p class="card-text">Guests: <%= booking.guests %></p>
+              <span class="badge <%= booking.status === 'confirmed' ? 'bg-success' : booking.status === 'cancelled' ? 'bg-danger' : 'bg-warning text-dark' %>">
+                <%= booking.status.charAt(0).toUpperCase() + booking.status.slice(1) %>
+              </span>
+              <a href="/listings/<%= booking.listing._id %>" class="btn btn-outline-primary rounded-pill mt-2">View Listing</a>
+              <% if (booking.status !== 'cancelled') { %>
+                <form action="/bookings/<%= booking._id %>/cancel" method="POST" class="mt-2 d-flex flex-column align-items-start">
+                  <input type="text" name="reason" class="form-control mb-2" placeholder="Reason for cancellation" required>
+                  <button type="submit" class="btn btn-outline-danger rounded-pill">Cancel Booking</button>
+                </form>
+              <% } %>
             </div>
           </div>
         </div>

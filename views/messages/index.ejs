@@ -1,0 +1,22 @@
+<% layout('/layouts/boilerplate') %>
+<div class="container my-5">
+  <div class="card shadow-sm rounded-4 p-4 mx-auto d-flex flex-column" style="max-width: 700px; height: 500px;">
+    <h3 class="fw-bold mb-3">Messages</h3>
+    <div id="chat-history" class="flex-grow-1 overflow-auto mb-3" style="max-height:350px;">
+      <% messages.forEach(msg => { %>
+        <div class="d-flex mb-3 <%= msg.sender._id.toString() === currUser._id.toString() ? 'justify-content-end' : 'justify-content-start' %>">
+          <div class="p-3 rounded-pill <%= msg.sender._id.toString() === currUser._id.toString() ? 'bg-primary text-white' : 'bg-light text-dark' %>" style="max-width: 60%;">
+            <small><%= msg.sender.username %>:</small><br>
+            <%= msg.content %>
+            <div class="text-end text-muted small mt-1"><%= new Date(msg.timestamp).toLocaleString() %></div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+    <form action="/message/<%= listingId %>" method="POST" class="d-flex gap-2 mt-auto">
+      <input type="hidden" name="receiver" value="<%= listingOwnerId %>">
+      <input type="text" name="content" class="form-control" placeholder="Type your message..." required>
+      <button type="submit" class="btn btn-success rounded-pill">Send</button>
+    </form>
+  </div>
+</div>

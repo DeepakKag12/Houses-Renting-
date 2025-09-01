@@ -7,6 +7,11 @@
   </div>
   <div class="offcanvas-body">
     <ul class="navbar-nav flex-column gap-2">
+      <% if(currUser) { %>
+        <li class="nav-item"><a class="nav-link fw-semibold" href="/message">Messages</a></li>
+        <li class="nav-item"><a class="nav-link fw-semibold" href="/favorites">Favorites</a></li>
+        <li class="nav-item"><a class="nav-link fw-semibold" href="/dashboard">Dashboard</a></li>
+      <% } %>
       <li class="nav-item"><a class="nav-link fw-semibold" href="/listings">Explore</a></li>
       <li class="nav-item"><a class="nav-link fw-semibold" href="/listings/new">Add new Home</a></li>
       <% if(!currUser) { %>
@@ -70,6 +75,14 @@
         <li class="nav-item">
           <a class="nav-link fw-semibold" href="/listings">Explore</a>
         </li>
+        <% if(currUser) { %>
+        <li class="nav-item">
+          <a class="btn btn-outline-danger rounded-pill px-4 py-2 fw-semibold d-flex align-items-center gap-2" href="/favorites" style="transition:all 0.2s;">
+            <i class="fa-solid fa-heart"></i>
+            <span style="color:#ff385c;">Wishlist</span>
+          </a>
+        </li>
+        <% } %>
       </ul>
       <!-- Modern Search Bar -->
       <form id="search-bar" action="/listings" method="GET" class="mx-3 d-flex align-items-center flex-grow-1" style="max-width:520px; min-width:220px;">

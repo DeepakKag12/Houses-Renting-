@@ -1,0 +1,29 @@
+<% layout('/layouts/boilerplate') %>
+<div class="container my-5">
+  <div class="card shadow-sm border-0 rounded-4 mb-4 p-4 d-flex flex-row align-items-center" style="background:linear-gradient(90deg,#ffdde1 0%,#ee9ca7 100%);">
+    <i class="fa-solid fa-heart fa-2x me-3" style="color:#ff385c;"></i>
+    <div>
+      <h3 class="fw-bold mb-0">My Wishlist</h3>
+      <p class="mb-0 text-muted">Homes you’ve liked and saved for later</p>
+    </div>
+  </div>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <% favorites.forEach(listing => { %>
+      <div class="col">
+        <div class="card h-100 shadow-sm border-0 rounded-4">
+          <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing Image" style="height:220px;object-fit:cover;border-radius:1.2rem 1.2rem 0 0;">
+          <div class="card-body">
+            <h5 class="card-title"><%= listing.title %></h5>
+            <p class="card-text">Price: ₹<%= listing.price %>/night</p>
+            <form action="/favorites/<%= listing._id %>?_method=DELETE" method="POST" class="mt-2">
+              <button class="btn btn-outline-danger rounded-pill w-100">Remove</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+  <% if (favorites.length === 0) { %>
+    <div class="text-center text-muted mt-5">No favorites yet. Start saving homes you love!</div>
+  <% } %>
+</div>

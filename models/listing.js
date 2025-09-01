@@ -24,7 +24,18 @@ const listingSchema = new Schema({
   owner:{
        type: Schema.Types.ObjectId,
       ref: "User",
-
+  },
+  views: {
+    type: Number,
+    default: 0
+  },
+  bookings: [{
+    type: Schema.Types.ObjectId,
+    ref: "Booking"
+  }],
+  earnings: {
+    type: Number,
+    default: 0
   },
   geometry: {
   type: {

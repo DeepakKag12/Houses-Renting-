@@ -1,0 +1,23 @@
+<% layout('/layouts/boilerplate') %>
+<div class="container my-5">
+  <div class="card shadow-sm rounded-4 p-4 mx-auto" style="max-width: 900px;">
+    <h3 class="fw-bold mb-4">Messages from Users</h3>
+    <% if (messages.length === 0) { %>
+      <div class="text-center text-muted">No messages yet.</div>
+    <% } %>
+    <% messages.forEach(msg => { %>
+      <div class="mb-4 border-bottom pb-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <span class="fw-bold">From:</span> <%= msg.sender.username %> (<%= msg.sender.email %>)<br>
+            <span class="fw-bold">Listing:</span> <%= msg.listing.title %>
+          </div>
+          <div class="text-muted small"><%= new Date(msg.timestamp).toLocaleString() %></div>
+        </div>
+        <div class="mt-2 p-3 rounded bg-light">
+          <%= msg.content %>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>

@@ -8,6 +8,10 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  favorites: [{
+    type: Schema.Types.ObjectId,
+    ref: "Listing"
+  }]
 });
 
 // Apply plugin to the schema, not the model

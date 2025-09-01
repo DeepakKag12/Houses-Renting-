@@ -118,6 +118,9 @@ app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", userRouter);
 app.use("/bookings", bookingRouter);
+app.use("/message", require("./routes/message"));
+app.use("/favorites", require("./routes/favorites"));
+app.use("/dashboard", require("./routes/dashboard"));
 // User dashboard: view own bookings
 const { isLoggedIn } = require("./middleware");
 const Booking = require("./models/booking");

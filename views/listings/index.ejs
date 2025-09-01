@@ -235,13 +235,22 @@
       <% for (let listing of listings) { %>
         <div class="col">
           <div class="card h-100 listing-card shadow-sm border-0">
-            <a href="/listings/<%= listing._id %>" style="text-decoration: none; color: inherit;">
-              <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing Image" style="border-radius: 1.2rem 1.2rem 0 0;">
-              <div class="card-body">
-                <h5 class="card-title"><b><%= listing.title %></b></h5>
-                <p class="card-text">Price: ₹<%= typeof listing.price === "number" ? listing.price.toLocaleString("en-IN") : "Not Available" %>/night</p>
-              </div>
-            </a>
+            <div class="position-relative">
+              <a href="/listings/<%= listing._id %>" style="text-decoration: none; color: inherit;">
+                <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing Image" style="border-radius: 1.2rem 1.2rem 0 0;">
+              </a>
+              <% if (currUser) { %>
+                <form action="/favorites/<%= listing._id %>" method="POST" class="position-absolute top-0 end-0 m-2">
+                  <button type="submit" class="btn btn-link p-0" style="font-size:1.7rem;color:#ff385c;">
+                    <i class="fa<%= currUser.favorites && currUser.favorites.includes(listing._id) ? 's' : 'r' %> fa-heart"></i>
+                  </button>
+                </form>
+              <% } %>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title"><b><%= listing.title %></b></h5>
+              <p class="card-text">Price: ₹<%= typeof listing.price === "number" ? listing.price.toLocaleString("en-IN") : "Not Available" %>/night</p>
+            </div>
           </div>
         </div>
       <% } %>
