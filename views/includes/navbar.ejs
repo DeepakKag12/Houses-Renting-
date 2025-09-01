@@ -6,19 +6,23 @@
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
+    <form class="d-flex mb-3" action="/search" method="GET">
+      <input class="form-control me-2" type="search" name="q" placeholder="Search homes..." aria-label="Search">
+      <button class="btn btn-dark" type="submit"><i class="fa fa-search"></i></button>
+    </form>
     <ul class="navbar-nav flex-column gap-2">
       <li class="nav-item"><a class="nav-link fw-semibold" href="/listings">Explore</a></li>
       <li class="nav-item"><a class="nav-link fw-semibold" href="/listings/new">Add new Home</a></li>
       <% if(!currUser) { %>
-        <li class="nav-item"><a class="btn btn-outline-success rounded-pill w-100" href="/signup">Sign up</a></li>
-        <li class="nav-item"><a class="btn btn-outline-danger rounded-pill w-100" href="/login">Sign in</a></li>
+        <li class="nav-item"><a class="btn btn-success w-100 mb-2" style="border-radius: 12px;" href="/signup">Sign up</a></li>
+        <li class="nav-item"><a class="btn btn-danger w-100 mb-2" style="border-radius: 12px;" href="/login">Sign in</a></li>
       <% } %>
       <% if(currUser) { %>
-        <li class="nav-item"><a class="btn btn-outline-primary rounded-pill w-100 d-flex align-items-center gap-2" href="/user/bookings"><i class="fa-solid fa-calendar-check" style="color:#ff385c;"></i><span style="color:#222;">My Bookings</span></a></li>
+        <li class="nav-item"><a class="btn btn-outline-primary w-100 mb-2 d-flex align-items-center gap-2" style="border-radius: 12px;" href="/user/bookings"><i class="fa-solid fa-calendar-check" style="color:#ff385c;"></i><span style="color:#222;">My Bookings</span></a></li>
         <% if(currUser.ownsListing) { %>
-          <li class="nav-item"><a class="btn btn-outline-primary rounded-pill w-100 d-flex align-items-center gap-2" href="/host/bookings"><i class="fa-solid fa-clipboard-list" style="color:#ff385c;"></i><span style="color:#222;">Host Bookings</span></a></li>
+          <li class="nav-item"><a class="btn btn-outline-primary w-100 mb-2 d-flex align-items-center gap-2" style="border-radius: 12px;" href="/host/bookings"><i class="fa-solid fa-clipboard-list" style="color:#ff385c;"></i><span style="color:#222;">Host Bookings</span></a></li>
         <% } %>
-        <li class="nav-item"><a class="btn btn-outline-danger rounded-pill w-100" href="/logout">Log out</a></li>
+        <li class="nav-item"><a class="btn btn-danger w-100 mb-2" style="border-radius: 12px;" href="/logout">Log out</a></li>
       <% } %>
     </ul>
   </div>
