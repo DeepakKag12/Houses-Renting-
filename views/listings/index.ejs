@@ -224,19 +224,27 @@
 
 <!-- Listings -->
 <div class="container">
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-    <% for (let listing of listings) { %>
-      <div class="col">
-        <div class="card h-100 listing-card shadow-sm border-0">
-          <a href="/listings/<%= listing._id %>" style="text-decoration: none; color: inherit;">
-            <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing Image" style="border-radius: 1.2rem 1.2rem 0 0;">
-            <div class="card-body">
-              <h5 class="card-title"><b><%= listing.title %></b></h5>
-              <p class="card-text">Price: ₹<%= typeof listing.price === "number" ? listing.price.toLocaleString("en-IN") : "Not Available" %>/night</p>
-            </div>
-          </a>
+  <% if (listings.length === 0) { %>
+    <div class="d-flex flex-column align-items-center justify-content-center py-5">
+      <i class="fa-solid fa-location-dot fa-3x mb-3" style="color:#ff385c;"></i>
+      <h4 class="fw-bold mb-2">We’ll be there shortly in your area!</h4>
+      <p class="text-muted">No homes found for your search. Stay tuned for new listings soon.</p>
+    </div>
+  <% } else { %>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <% for (let listing of listings) { %>
+        <div class="col">
+          <div class="card h-100 listing-card shadow-sm border-0">
+            <a href="/listings/<%= listing._id %>" style="text-decoration: none; color: inherit;">
+              <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing Image" style="border-radius: 1.2rem 1.2rem 0 0;">
+              <div class="card-body">
+                <h5 class="card-title"><b><%= listing.title %></b></h5>
+                <p class="card-text">Price: ₹<%= typeof listing.price === "number" ? listing.price.toLocaleString("en-IN") : "Not Available" %>/night</p>
+              </div>
+            </a>
+          </div>
         </div>
-      </div>
-    <% } %>
-  </div>
+      <% } %>
+    </div>
+  <% } %>
 </div>

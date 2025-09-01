@@ -6,10 +6,6 @@
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-    <form class="d-flex mb-3" action="/search" method="GET">
-      <input class="form-control me-2" type="search" name="q" placeholder="Search homes..." aria-label="Search">
-      <button class="btn btn-dark" type="submit"><i class="fa fa-search"></i></button>
-    </form>
     <ul class="navbar-nav flex-column gap-2">
       <li class="nav-item"><a class="nav-link fw-semibold" href="/listings">Explore</a></li>
       <li class="nav-item"><a class="nav-link fw-semibold" href="/listings/new">Add new Home</a></li>
@@ -90,10 +86,6 @@
         </li>
       </ul>
       <div class="navbar-nav ms-auto d-flex align-items-center gap-2">
-        <% if(!currUser) { %>
-          <a class="btn btn-outline-success text-nowrap rounded-pill px-4 py-2 fw-semibold" href="/signup" style="transition:all 0.2s;">Sign up</a>
-          <a class="btn btn-outline-danger text-nowrap rounded-pill px-4 py-2 fw-semibold" href="/login" style="transition:all 0.2s;">Sign in</a>
-        <% } %>
         <% if(currUser) { %>
           <a class="btn btn-outline-primary rounded-pill px-4 py-2 fw-semibold d-flex align-items-center gap-2" href="/user/bookings" style="transition:all 0.2s;">
             <i class="fa-solid fa-calendar-check" style="color:#ff385c;"></i>
@@ -105,7 +97,6 @@
               <span style="color:#222;">Host Bookings</span>
             </a>
           <% } %>
-          <a class="btn btn-outline-danger rounded-pill px-4 py-2 fw-semibold" href="/logout" style="transition:all 0.2s;">Log out</a>
         <% } %>
 <style>
   .navbar-nav .nav-link:hover, .navbar-nav .btn:hover {
