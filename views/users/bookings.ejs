@@ -1,0 +1,24 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container my-5">
+  <h2 class="mb-4 text-center">Your Bookings</h2>
+  <% if (bookings && bookings.length) { %>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <% bookings.forEach(b => { %>
+        <div class="col">
+          <div class="card shadow-sm border-0 rounded-4">
+            <img src="<%= b.listing.image.url %>" class="card-img-top" alt="Listing Image" style="height:220px;object-fit:cover;border-radius:1.2rem 1.2rem 0 0;">
+            <div class="card-body">
+              <h5 class="card-title"><%= b.listing.title %></h5>
+              <p class="card-text">Check-in: <%= b.checkin %><br>Check-out: <%= b.checkout %></p>
+              <p class="card-text">Status: <span class="fw-bold <%= b.status==='confirmed'?'text-success':'text-warning' %>"><%= b.status %></span></p>
+              <a href="/listings/<%= b.listing._id %>" class="btn btn-outline-primary rounded-pill">View Listing</a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="alert alert-info text-center">You have no bookings yet.</div>
+  <% } %>
+</div>

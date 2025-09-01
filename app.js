@@ -23,6 +23,7 @@ const User = require("./models/user.js");
 const listingsRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+const bookingRouter = require("./routes/booking.js");
 
 // Middleware setup
 app.use(express.urlencoded({ extended: true }));
@@ -81,7 +82,19 @@ app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.currUser = req.user;
-  next();
+  // Add ownsListing property for navbar logic
+  if (req.user) {
+    const Listing = require("./models/listing");
+    Listing.countDocuments({ owner: req.user._id }).then(count => {
+      res.locals.currUser.ownsListing = count > 0;
+      next();
+    }).catch(() => {
+      res.locals.currUser.ownsListing = false;
+      next();
+    });
+  } else {
+    next();
+  }
 });
 
 // 👇 Root route (fixes "Cannot GET /")
@@ -104,6 +117,22 @@ app.get("/demouser", async (req, res) => {
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", userRouter);
+app.use("/bookings", bookingRouter);
+// User dashboard: view own bookings
+const { isLoggedIn } = require("./middleware");
+const Booking = require("./models/booking");
+app.get("/user/bookings", isLoggedIn, async (req, res) => {
+  const bookings = await Booking.find({ user: req.user._id }).populate("listing");
+  res.render("users/bookings", { bookings });
+});
+
+// Host dashboard: view bookings for listings owned by user
+app.get("/host/bookings", isLoggedIn, async (req, res) => {
+  const Listing = require("./models/listing");
+  const listings = await Listing.find({ owner: req.user._id });
+  const bookings = await Booking.find({ listing: { $in: listings.map(l => l._id) } }).populate("listing").populate("user");
+  res.render("bookings/host", { bookings });
+});
 
 // Central error handler
 app.use((err, req, res, next) => {

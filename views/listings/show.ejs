@@ -27,6 +27,45 @@
       <li class="list-group-item bg-transparent px-0"><strong>🌐 Country:</strong> <%= listing.country %></li>
     </ul>
 
+      <% if (!currUser || currUser._id.toString() !== listing.owner._id.toString()) { %>
+        <div class="mb-4">
+          <h5 class="mb-3 text-dark">🗓️ Book this Home</h5>
+          <form action="/bookings" method="POST" class="row g-3 align-items-end">
+            <input type="hidden" name="listing" value="<%= listing._id %>" />
+            <div class="col-md-4">
+              <label for="checkin" class="form-label">Check-in</label>
+              <input type="date" class="form-control" name="checkin" id="checkin" required />
+            </div>
+            <div class="col-md-4">
+              <label for="checkout" class="form-label">Check-out</label>
+              <input type="date" class="form-control" name="checkout" id="checkout" required />
+            </div>
+            <div class="col-md-2">
+              <label for="guests" class="form-label">Guests</label>
+              <input type="number" class="form-control" name="guests" id="guests" min="1" value="1" required />
+            </div>
+            <div class="col-md-2 d-grid">
+              <% if (currUser) { %>
+                <button type="submit" class="btn btn-danger rounded-pill">Book Now</button>
+              <% } else { %>
+                <a href="/login" class="btn btn-warning rounded-pill">Login to Book</a>
+              <% } %>
+            </div>
+          </form>
+          <div class="form-text mt-2">Unavailable dates will be shown soon.</div>
+        <% if (unavailableDates && unavailableDates.length) { %>
+          <div class="mt-3">
+            <strong>Unavailable Dates:</strong>
+            <ul class="list-unstyled">
+              <% unavailableDates.forEach(d => { %>
+                <li class="text-danger"><%= d %></li>
+              <% }) %>
+            </ul>
+          </div>
+        <% } %>
+        </div>
+      <% } %>
+
     <% 
       let totalRating = 0;
       let reviewCount = listing.reviews.length;

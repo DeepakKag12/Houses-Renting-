@@ -71,8 +71,20 @@ module.exports.ShowListing = async (req, res) => {
     }
   }
 
-  console.log("📍 Listing geometry:", listing.geometry);
-  res.render("listings/show", { listing });
+  // Get unavailable dates for this listing
+  const Booking = require("../models/booking");
+  const bookings = await Booking.find({ listing: listing._id });
+  let unavailableDates = [];
+  bookings.forEach(b => {
+    let start = new Date(b.checkin);
+    let end = new Date(b.checkout);
+    for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+      unavailableDates.push(d.toISOString().slice(0, 10));
+    }
+  });
+  unavailableDates = [...new Set(unavailableDates)]; // unique
+
+  res.render("listings/show", { listing, unavailableDates });
 };
 
 // Render edit form
