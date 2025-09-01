@@ -1,4 +1,28 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom shadow-sm sticky-top py-2">
+<!-- Offcanvas Sidebar for Mobile -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="mobileSidebar" aria-labelledby="mobileSidebarLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="mobileSidebarLabel">Menu</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="navbar-nav flex-column gap-2">
+      <li class="nav-item"><a class="nav-link fw-semibold" href="/listings">Explore</a></li>
+      <li class="nav-item"><a class="nav-link fw-semibold" href="/listings/new">Add new Home</a></li>
+      <% if(!currUser) { %>
+        <li class="nav-item"><a class="btn btn-outline-success rounded-pill w-100" href="/signup">Sign up</a></li>
+        <li class="nav-item"><a class="btn btn-outline-danger rounded-pill w-100" href="/login">Sign in</a></li>
+      <% } %>
+      <% if(currUser) { %>
+        <li class="nav-item"><a class="btn btn-outline-primary rounded-pill w-100 d-flex align-items-center gap-2" href="/user/bookings"><i class="fa-solid fa-calendar-check" style="color:#ff385c;"></i><span style="color:#222;">My Bookings</span></a></li>
+        <% if(currUser.ownsListing) { %>
+          <li class="nav-item"><a class="btn btn-outline-primary rounded-pill w-100 d-flex align-items-center gap-2" href="/host/bookings"><i class="fa-solid fa-clipboard-list" style="color:#ff385c;"></i><span style="color:#222;">Host Bookings</span></a></li>
+        <% } %>
+        <li class="nav-item"><a class="btn btn-outline-danger rounded-pill w-100" href="/logout">Log out</a></li>
+      <% } %>
+    </ul>
+  </div>
+</div>
 <style>
   .navbar-nav .nav-link:hover, .navbar-nav .btn:hover {
     background: #fff0f3 !important;
@@ -39,7 +63,7 @@
   <i class="fa-solid fa-compass fa-lg" style="color:#ff385c;"></i>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+  <span class="navbar-toggler-icon" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-controls="mobileSidebar"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-3 mb-2 mb-md-0">
