@@ -1,0 +1,23 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Sensitive uploads
+uploads/*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# VSCode
+.vscode/
+
+# Other sensitive files
+*.pem
+*.key
+*.crt
